@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pokémon by MaxCP</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../CSS/pokestyle.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="../JS/loadhtml.js"></script>
+        <script src="../JS/maxcpdata.js"></script>
+    </head>
+    <body>
+        <main>
+            <div pokeinclude="./headercp.html">
+
+
+            </div>
+            <div class="PokeList">
+                <h1>Best Pokémon by CP</h1>
+                <table class="table-fluid coltab">
+                    <thead>
+                        <tr>
+                            <th onclick="sortColumn('pokemon_id')">Pokedex Entry</th>
+                            <th onclick="sortColumn('pokemon_name')">Name</th>
+                            <th onclick="sortColumn('max_cp')">Max CP</th>
+                            <th onclick="sortColumn('max_cp')">Max HP</th>
+                            <th onclick="sortColumn('max_stamina')">Max Stamina</th>
+                            <th onclick="sortColumn('max_attack')">Max Attack</th>
+                            <th onclick="sortColumn('max_defense')">Max Defense</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableData"></tbody>
+                </table>
+            </div>
+        </main>
+    </body>
+</html>
