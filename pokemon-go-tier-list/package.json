@@ -1,0 +1,17 @@
+{
+  "name": "pokemon_go_-_tier_list",
+  "version": "0.43",
+  "description": "Pokemon GO Site with Database and Guides for Personal Use",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pokemon-go"
+  ],
+  "author": "GabrielXPegasus",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.8"
+  }
+}
