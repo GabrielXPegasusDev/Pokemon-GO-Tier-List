@@ -1,44 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Function to fetch and display Pokémon data
-    const fetchPokemonData = async () => {
-        try {
-            const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1302');
-            const data = await response.json();
-            const pokemonList = data.results;
+async function fetchPokemonData() {
+    const response = await fetch('./latest.json'); // Load the local JSON file
+    const data = await response.json();
+    return data;
+}
 
-            let tableData = '';
-            for (const [index, pokemon] of pokemonList.entries()) {
-                const pokeResponse = await fetch(pokemon.url);
-                const pokeData = await pokeResponse.json();
+function calculateMaxCP(baseAttack, baseDefense, baseStamina) {
+    const cpMultiplier = 0.7903001; // Level 50 multiplier
+    return Math.floor(
+        ((baseAttack + 15) * 
+        Math.sqrt(baseDefense + 15) * 
+        Math.sqrt(baseStamina + 15) * 
+        Math.pow(cpMultiplier, 2)) / 10
+    );
+}
 
-                const baseAttack = pokeData.stats[1].base_stat;
-                const baseDefense = pokeData.stats[2].base_stat;
-                const baseStamina = pokeData.stats[0].base_stat;
+async function displayPokemonMaxCP() {
+    const pokemonData = await fetchPokemonData();
+    const resultsDiv = document.getElementById('pokemon-list');
 
-                // Calculate Max CP
-                const maxCP = Math.floor(
-                    ((baseAttack + 15) *
-                    Math.sqrt(baseDefense + 15) *
-                    Math.sqrt(baseStamina + 15) *
-                    Math.pow(0.7903001, 2)) / 10
-                );
+    pokemonData.forEach(pokemon => {
+        const baseAttack = pokemon.base_attack;
+        const baseDefense = pokemon.base_defense;
+        const baseStamina = pokemon.base_stamina;
+        const maxCP = calculateMaxCP(baseAttack, baseDefense, baseStamina);
 
-                tableData += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${pokeData.name}</td>
-                        <td>${maxCP}</td>
-                        <td>${baseStamina}</td>
-                        <td>${baseAttack}</td>
-                        <td>${baseDefense}</td>
-                    </tr>`;
-            }
+        const pokemonDiv = document.createElement('div');
+        pokemonDiv.innerHTML = `<strong>${pokemon.name}</strong>: Max CP at Level 50 = ${maxCP}`;
+        resultsDiv.appendChild(pokemonDiv);
+    });
+}
 
-            document.getElementById('tableData').innerHTML = tableData;
-        } catch (error) {
-            console.error('Error fetching Pokémon data:', error);
-        }
-    };
-
-    fetchPokemonData();
-});
+displayPokemonMaxCP();
